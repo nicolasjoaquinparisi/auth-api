@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction, Errback } from "express";
-import EmailConflictError from "../errors/auth/EmailConflictError";
-import WeakPasswordError from "../errors/auth/WeakPasswordError";
+import EmailConflictError from "../errors/EmailConflictError";
+import WeakPasswordError from "../errors/WeakPasswordError";
 
 export default async function errorHandler(
   err: Errback,
