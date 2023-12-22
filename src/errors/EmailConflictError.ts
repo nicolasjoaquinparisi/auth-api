@@ -1,4 +1,4 @@
-import ErrorBase from "../ErrorBase";
+import ErrorBase from "./ErrorBase";
 
 export default class EmailConflictError extends ErrorBase {
   constructor(message: string) {
