@@ -4,8 +4,8 @@ import {
   generatePassword,
   isValidPassword,
 } from "../../../utils/security/password";
-import WeakPasswordError from "../../../errors/auth/WeakPasswordError";
-import EmailConflictError from "../../../errors/auth/EmailConflictError";
+import WeakPasswordError from "../../../errors/WeakPasswordError";
+import EmailConflictError from "../../../errors/EmailConflictError";
 
 export type SignupServiceData = {
   email: string;

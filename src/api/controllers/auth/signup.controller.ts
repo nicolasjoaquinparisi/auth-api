@@ -8,7 +8,7 @@ export default async function signup(
 ) {
   try {
     await signupService({ data: req.body });
-    return res.status(200).send({ message: "user created" });
+    return res.status(201).send({ message: "User created" });
   } catch (error) {
     next(error);
   }

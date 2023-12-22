@@ -7,14 +7,8 @@ export default async function signin(
   next: NextFunction
 ) {
   try {
-    const { user, accessToken } = await signinService(req.body);
-
-    const responsePayload = {
-      user: user,
-      accessToken: accessToken,
-    };
-
-    res.status(200).send(responsePayload);
+    const payload = await signinService({ data: req.body });
+    res.status(200).send(payload);
   } catch (error) {
     next(error);
   }
