@@ -6,6 +6,18 @@ dotenv.config();
 const JWT_SECRET = process.env.JWT_SECRET ?? "";
 const EXPIRATION_TIME = process.env.EXPIRATION_TIME ?? "3600";
 
+export type TAccessToken = {
+  user: {
+    id: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+  };
+  iat?: string;
+  exp: number;
+  iss?: string;
+};
+
 export function createAccessToken({
   user,
 }: {
@@ -28,6 +40,12 @@ export function createAccessToken({
   return { accessToken: token, expiresIn: expiresIn };
 }
 
-export function decodeAccessToken(accessToken: string) {
-  return jwt.verify(accessToken, JWT_SECRET);
+export function decodeAccessToken(accessToken: string): TAccessToken {
+  const token = jwt.verify(accessToken, JWT_SECRET);
+
+  const accessToken: TAccessToken = {
+    user: token.user,
+  };
+
+  return accessToken;
 }
