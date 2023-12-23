@@ -48,6 +48,7 @@ export default async function signin({ data }: { data: SigninServiceData }) {
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,
+      publicMetadata: user.publicMetadata,
     },
     accessToken: accessToken,
     expiresIn: expiresIn,
