@@ -20,6 +20,8 @@ export default async function signin({ data }: { data: InfoServiceData }) {
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,
+      logins: user.logins,
+      lastLogin: user.lastLogin,
       publicMetadata: user.publicMetadata,
     },
   };

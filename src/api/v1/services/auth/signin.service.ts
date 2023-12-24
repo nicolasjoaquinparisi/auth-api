@@ -31,16 +31,7 @@ export default async function signin({ data }: { data: SigninServiceData }) {
 
   user = await update({ userId: user.id, logins: user.logins + 1 });
 
-  const accessTokenPayload = {
-    user: {
-      id: user.id,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      email: user.email,
-    },
-  };
-
-  const { accessToken, expiresIn } = createAccessToken(accessTokenPayload);
+  const { accessToken, expiresIn } = createAccessToken(user.id);
 
   const payload = {
     user: {
@@ -48,6 +39,8 @@ export default async function signin({ data }: { data: SigninServiceData }) {
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,
+      logins: user.logins,
+      lastLogin: user.lastLogin,
       publicMetadata: user.publicMetadata,
     },
     accessToken: accessToken,

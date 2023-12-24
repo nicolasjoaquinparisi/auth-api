@@ -8,20 +8,12 @@ const JWT_ISSUER = process.env.JWT_ISSUER ?? "";
 const EXPIRATION_TIME_IN_SECONDS = process.env.EXPIRATION_TIME_IN_SECONDS;
 const AUTH_API_AUDIENCE = "auth-api";
 
-export function createAccessToken({
-  user,
-}: {
-  user: { id: string; firstName: string; lastName: string; email: string };
-}) {
+export function createAccessToken(userId: string) {
   const expirationTimeInSeconds = Number(EXPIRATION_TIME_IN_SECONDS);
-
-  if (!user) {
-    throw new Error("Missing user data");
-  }
 
   const token = jwt.sign(
     {
-      userId: user.id,
+      userId: userId,
     },
     JWT_SECRET,
     {
