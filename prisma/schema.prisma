@@ -21,7 +21,38 @@ model User {
   password        String
   logins          Int       @default(0)
   lastLogin       DateTime?
+  roleId          String
+  role            Role      @relation(fields: [roleId], references: [id])
   isBlocked       Boolean   @default(false)
   privateMetadata Json?     @default("{}")
   publicMetadata  Json?     @default("{}")
+}
+
+model Role {
+  id                 String               @id @default(uuid())
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+  deletedAt          DateTime?
+  name               String               @unique
+  description        String?              @default("")
+  users              User[]
+  PermissionsOnRoles PermissionsOnRoles[]
+}
+
+model Permission {
+  id                 String               @id @default(uuid())
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+  name               String               @unique
+  description        String?              @default("")
+  PermissionsOnRoles PermissionsOnRoles[]
+}
+
+model PermissionsOnRoles {
+  role         Role       @relation(fields: [roleId], references: [id])
+  permission   Permission @relation(fields: [permissionId], references: [id])
+  roleId       String
+  permissionId String
+
+  @@id([roleId, permissionId])
 }
