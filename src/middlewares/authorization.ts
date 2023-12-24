@@ -36,15 +36,8 @@ export default async function authorization(
 
     req.body.userId = decodedAccessToken.userId;
 
-    const expirationTime = new Date(decodedAccessToken.exp * 1000);
-    const currentDate = new Date();
-
-    if (expirationTime < currentDate) {
-      return res.status(400).json({ message: "Token expired" });
-    }
-
     next();
   } catch (error) {
-    return res.status(401).json({ message: "Unauthorized" });
+    return res.status(401).json({ message: "Token expired" });
   }
 }
