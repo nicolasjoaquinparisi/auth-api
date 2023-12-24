@@ -1,6 +1,14 @@
 import { Request, Response, NextFunction } from "express";
 import { decodeAccessToken } from "../utils/security/jwt";
 
+type TDecodedAccessToken = {
+  userId: string;
+  iat: number;
+  exp: number;
+  aud: string;
+  iss: string;
+};
+
 export default async function authorization(
   req: Request,
   res: Response,
@@ -22,13 +30,11 @@ export default async function authorization(
       return;
     }
 
-    const decodedAccessToken: TAccessToken = decodeAccessToken(accessToken);
+    const decodedAccessToken: TDecodedAccessToken = decodeAccessToken(
+      accessToken
+    ) as TDecodedAccessToken;
 
-    const user = decodedAccessToken.user;
-
-    if (decodedAccessToken.exp) {
-      return res.status(400).json({ message: "Access token malformed" });
-    }
+    req.body.userId = decodedAccessToken.userId;
 
     const expirationTime = new Date(decodedAccessToken.exp * 1000);
     const currentDate = new Date();

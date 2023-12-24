@@ -7,7 +7,7 @@ export default async function signin(
   next: NextFunction
 ) {
   try {
-    const payload = await infoService({ data: { userId: req.user.id } });
+    const payload = await infoService({ data: { userId: req.body.userId } });
     res.status(200).send(payload);
   } catch (error) {
     next(error);

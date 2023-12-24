@@ -3,9 +3,9 @@ import createUserRepository from "../../repositories/users/create.repository";
 import {
   generatePassword,
   isValidPassword,
-} from "../../../utils/security/password";
-import WeakPasswordError from "../../../errors/WeakPasswordError";
-import EmailConflictError from "../../../errors/EmailConflictError";
+} from "../../../../utils/security/password";
+import WeakPasswordError from "../../../../errors/WeakPasswordError";
+import EmailConflictError from "../../../../errors/EmailConflictError";
 
 export type SignupServiceData = {
   email: string;

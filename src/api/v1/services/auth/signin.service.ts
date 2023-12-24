@@ -1,9 +1,9 @@
 import bcrypt from "bcryptjs";
-import AccountBlockedError from "../../../errors/AccountBlockedError";
-import InvalidCredentialserror from "../../../errors/InvalidCredentialsError";
+import AccountBlockedError from "../../../../errors/AccountBlockedError";
+import InvalidCredentialserror from "../../../../errors/InvalidCredentialsError";
 import findByEmailRepository from "../../repositories/users/findByEmail.repository";
 import update from "../../repositories/users/update.repository";
-import { createAccessToken } from "../../../utils/security/jwt";
+import { createAccessToken } from "../../../../utils/security/jwt";
 
 export type SigninServiceData = {
   email: string;

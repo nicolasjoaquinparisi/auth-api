@@ -1,4 +1,4 @@
-import UserNotFoundError from "../../../errors/UserNotFoundError";
+import UserNotFoundError from "../../../../errors/UserNotFoundError";
 import findUserById from "../../repositories/users/findById.repository";
 
 export type InfoServiceData = {
