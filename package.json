@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "./src/app.ts",
+  "type": "module",
+  "prisma": {
+    "seed": "node --no-warnings src/scripts/seed.js"
+  },
   "scripts": {
     "dev": "NODE_ENV=development nodemon ./src/app.ts",
     "start": "NODE_ENV=production node ./src/app.ts"

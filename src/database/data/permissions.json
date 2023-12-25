@@ -1,0 +1,50 @@
+[
+  {
+    "name": "create:users",
+    "description": "Create users"
+  },
+  {
+    "name": "read:users",
+    "description": "Read users"
+  },
+  {
+    "name": "update:users",
+    "description": "Update users"
+  },
+  {
+    "name": "delete:users",
+    "description": "Delete users"
+  },
+  {
+    "name": "create:roles",
+    "description": "Create roles"
+  },
+  {
+    "name": "read:roles",
+    "description": "Read roles"
+  },
+  {
+    "name": "update:roles",
+    "description": "Update roles"
+  },
+  {
+    "name": "delete:roles",
+    "description": "Delete roles"
+  },
+  {
+    "name": "create:permissions",
+    "description": "Create permissions"
+  },
+  {
+    "name": "read:permissions",
+    "description": "Read permissions"
+  },
+  {
+    "name": "update:permissions",
+    "description": "Update permissions"
+  },
+  {
+    "name": "delete:permissions",
+    "description": "Delete permissions"
+  }
+]

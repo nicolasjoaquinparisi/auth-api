@@ -29,23 +29,23 @@ model User {
 }
 
 model Role {
-  id                 String               @id @default(uuid())
-  createdAt          DateTime             @default(now())
-  updatedAt          DateTime             @updatedAt
-  deletedAt          DateTime?
-  name               String               @unique
-  description        String?              @default("")
-  users              User[]
-  PermissionsOnRoles PermissionsOnRoles[]
+  id          String               @id @default(uuid())
+  createdAt   DateTime             @default(now())
+  updatedAt   DateTime             @updatedAt
+  deletedAt   DateTime?
+  name        String               @unique
+  description String?              @default("")
+  users       User[]
+  permissions PermissionsOnRoles[]
 }
 
 model Permission {
-  id                 String               @id @default(uuid())
-  createdAt          DateTime             @default(now())
-  updatedAt          DateTime             @updatedAt
-  name               String               @unique
-  description        String?              @default("")
-  PermissionsOnRoles PermissionsOnRoles[]
+  id          String               @id @default(uuid())
+  createdAt   DateTime             @default(now())
+  updatedAt   DateTime             @updatedAt
+  name        String               @unique
+  description String?              @default("")
+  roles       PermissionsOnRoles[]
 }
 
 model PermissionsOnRoles {

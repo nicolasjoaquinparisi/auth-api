@@ -13,3 +13,6 @@ down:
 
 migrate:
 	@$(prisma_cmd) migrate dev --name init
+
+seed:
+	@$(prisma_cmd) db seed
