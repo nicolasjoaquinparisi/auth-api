@@ -11,21 +11,22 @@ datasource db {
 }
 
 model User {
-  id              String    @id @default(uuid())
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
+  id              String               @id @default(uuid())
+  createdAt       DateTime             @default(now())
+  updatedAt       DateTime             @updatedAt
   deletedAt       DateTime?
   firstName       String
   lastName        String
-  email           String    @unique
+  email           String               @unique
   password        String
-  logins          Int       @default(0)
+  logins          Int                  @default(0)
   lastLogin       DateTime?
   roleId          String
-  role            Role      @relation(fields: [roleId], references: [id])
-  isBlocked       Boolean   @default(false)
-  privateMetadata Json?     @default("{}")
-  publicMetadata  Json?     @default("{}")
+  role            Role                 @relation(fields: [roleId], references: [id])
+  permissions     PermissionsOnUsers[]
+  isBlocked       Boolean              @default(false)
+  privateMetadata Json?                @default("{}")
+  publicMetadata  Json?                @default("{}")
 }
 
 model Role {
@@ -46,6 +47,7 @@ model Permission {
   name        String               @unique
   description String?              @default("")
   roles       PermissionsOnRoles[]
+  users       PermissionsOnUsers[]
 }
 
 model PermissionsOnRoles {
@@ -55,4 +57,13 @@ model PermissionsOnRoles {
   permissionId String
 
   @@id([roleId, permissionId])
+}
+
+model PermissionsOnUsers {
+  user         User       @relation(fields: [userId], references: [id])
+  permission   Permission @relation(fields: [permissionId], references: [id])
+  userId       String
+  permissionId String
+
+  @@id([userId, permissionId])
 }

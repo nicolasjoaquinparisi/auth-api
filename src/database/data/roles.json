@@ -2,7 +2,7 @@
   {
     "name": "User",
     "description": "Common user role",
-    "permissions": ["read:users"]
+    "permissions": ["user:profile"]
   },
   {
     "name": "Admin",

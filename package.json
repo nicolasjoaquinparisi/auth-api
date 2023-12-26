@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "./src/app.ts",
-  "type": "module",
   "prisma": {
     "seed": "node --no-warnings src/scripts/seed.js"
   },
@@ -17,6 +16,7 @@
   },
   "dependencies": {
     "@prisma/client": "^5.1.1",
+    "@types/helmet": "^4.0.0",
     "@types/joi": "^17.2.3",
     "@types/jsonwebtoken": "^9.0.5",
     "bcryptjs": "^2.4.3",
@@ -36,7 +36,7 @@
     "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.21",
     "@types/morgan": "^1.9.9",
-    "@types/node": "^20.10.4",
+    "@types/node": "^20.10.5",
     "nodemon": "^3.0.1",
     "prisma": "^5.1.1",
     "ts-node": "^10.9.2"

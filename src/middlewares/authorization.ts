@@ -1,16 +1,10 @@
-import { Request, Response, NextFunction } from "express";
+import { Response, NextFunction } from "express";
 import { decodeAccessToken } from "../utils/security/jwt";
-
-type TDecodedAccessToken = {
-  userId: string;
-  iat: number;
-  exp: number;
-  aud: string;
-  iss: string;
-};
+import { AuthenticatedRequest } from "../definitions/AuthenticatedRequest";
+import { TDecodedAccessToken } from "../definitions/types";
 
 export default async function authorization(
-  req: Request,
+  req: AuthenticatedRequest,
   res: Response,
   next: NextFunction
 ) {
@@ -34,7 +28,7 @@ export default async function authorization(
       accessToken
     ) as TDecodedAccessToken;
 
-    req.body.userId = decodedAccessToken.userId;
+    req.user = decodedAccessToken.payload;
 
     next();
   } catch (error) {

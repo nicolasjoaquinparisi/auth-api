@@ -29,19 +29,39 @@ export default async function signin({ data }: { data: SigninServiceData }) {
     throw new InvalidCredentialserror("Invalid credentials");
   }
 
-  user = await update({ userId: user.id, logins: user.logins + 1 });
+  const updatedUser = await update({
+    userId: user.id,
+    logins: user.logins + 1,
+  });
 
-  const { accessToken, expiresIn } = createAccessToken(user.id);
+  const userPermissions = [
+    ...updatedUser.role.permissions.map(
+      (permissionOnRole) => permissionOnRole.permission.name
+    ),
+    ...updatedUser.permissions.map(
+      (permissionOnUser) => permissionOnUser.permission.name
+    ),
+  ];
+
+  const tokenPayload = {
+    id: updatedUser.id,
+    role: updatedUser.role.name,
+    permissions: userPermissions,
+  };
+
+  const { accessToken, expiresIn } = createAccessToken(tokenPayload);
 
   const payload = {
     user: {
-      id: user.id,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      email: user.email,
-      logins: user.logins,
-      lastLogin: user.lastLogin,
-      publicMetadata: user.publicMetadata,
+      id: updatedUser.id,
+      firstName: updatedUser.firstName,
+      lastName: updatedUser.lastName,
+      email: updatedUser.email,
+      logins: updatedUser.logins,
+      lastLogin: updatedUser.lastLogin,
+      publicMetadata: updatedUser.publicMetadata,
+      role: updatedUser.role.name,
+      permissions: userPermissions,
     },
     accessToken: accessToken,
     expiresIn: expiresIn,

@@ -8,12 +8,18 @@ const JWT_ISSUER = process.env.JWT_ISSUER ?? "";
 const EXPIRATION_TIME_IN_SECONDS = process.env.EXPIRATION_TIME_IN_SECONDS;
 const AUTH_API_AUDIENCE = "auth-api";
 
-export function createAccessToken(userId: string) {
+type TPayload = {
+  id: string;
+  role: string;
+  permissions: string[];
+};
+
+export function createAccessToken(payload: TPayload) {
   const expirationTimeInSeconds = Number(EXPIRATION_TIME_IN_SECONDS);
 
   const token = jwt.sign(
     {
-      userId: userId,
+      payload,
     },
     JWT_SECRET,
     {

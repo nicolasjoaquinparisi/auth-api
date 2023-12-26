@@ -46,5 +46,9 @@
   {
     "name": "delete:permissions",
     "description": "Delete permissions"
+  },
+  {
+    "name": "user:profile",
+    "description": "Read user profile"
   }
 ]

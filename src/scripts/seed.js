@@ -16,7 +16,7 @@ async function seedRoles(prisma) {
     })
   );
 
-  console.log(`Seeded ${seededRoles.length} roles.`);
+  console.log(`${seededRoles.length} roles seeded.`);
 }
 
 async function seedPermissions(prisma) {
@@ -33,13 +33,13 @@ async function seedPermissions(prisma) {
     })
   );
 
-  console.info(`Seeded ${seededPermissions.length} permissions.`);
+  console.info(`${seededPermissions.length} permissions seeded.`);
 }
 
 async function seedPermissionsOnRoles(prisma) {
-  console.info("Seeding PermissionsOnRoles...");
+  let permissionsOnRolesCreatedsCount = 0;
 
-  const permissionsOnRoles = await Promise.all(
+  await Promise.all(
     roles.map(async (role) => {
       const foundRole = await prisma.role.findFirst({
         where: { name: role.name },
@@ -47,19 +47,19 @@ async function seedPermissionsOnRoles(prisma) {
 
       await Promise.all(
         role.permissions.map(async (permission) => {
-          console.info(`Processing ${role.name}-${permission}`);
           const foundPermission = await prisma.permission.findFirst({
             where: { name: permission },
           });
           await prisma.permissionsOnRoles.create({
             data: { roleId: foundRole.id, permissionId: foundPermission.id },
           });
+          permissionsOnRolesCreatedsCount++;
         })
       );
     })
   );
 
-  console.info(`Seeded ${permissionsOnRoles.length} roles-permissions.`);
+  console.info(`${permissionsOnRolesCreatedsCount} roles-permissions seeded.`);
 }
 
 async function main() {
