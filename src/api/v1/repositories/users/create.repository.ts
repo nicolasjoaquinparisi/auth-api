@@ -5,6 +5,7 @@ export type TCreateUser = {
   password: string;
   firstName: string;
   lastName: string;
+  roleId: string;
 };
 
 export default async function create({
@@ -12,6 +13,7 @@ export default async function create({
   password,
   firstName,
   lastName,
+  roleId,
 }: TCreateUser) {
   return await prisma.user.create({
     data: {
@@ -19,6 +21,7 @@ export default async function create({
       password: password,
       firstName: firstName,
       lastName: lastName,
+      roleId: roleId,
     },
   });
 }

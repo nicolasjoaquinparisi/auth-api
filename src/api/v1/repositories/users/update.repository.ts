@@ -10,6 +10,41 @@ export default async function update({ userId, logins }: TUpdateUser) {
     where: {
       id: userId,
     },
+    select: {
+      id: true,
+      firstName: true,
+      lastName: true,
+      email: true,
+      logins: true,
+      lastLogin: true,
+      publicMetadata: true,
+      privateMetadata: true,
+      isBlocked: true,
+      roleId: true,
+      role: {
+        select: {
+          name: true,
+          permissions: {
+            select: {
+              permission: {
+                select: {
+                  name: true,
+                },
+              },
+            },
+          },
+        },
+      },
+      permissions: {
+        select: {
+          permission: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      },
+    },
     data: {
       logins: logins,
       lastLogin: new Date(),

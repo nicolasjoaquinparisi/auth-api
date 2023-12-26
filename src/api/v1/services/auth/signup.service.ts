@@ -6,6 +6,8 @@ import {
 } from "../../../../utils/security/password";
 import WeakPasswordError from "../../../../errors/WeakPasswordError";
 import EmailConflictError from "../../../../errors/EmailConflictError";
+import findOneRoleService from "../../services/roles/findOne.service";
+import RoleNotFoundError from "../../../../errors/RoleNotFoundError";
 
 export type SignupServiceData = {
   email: string;
@@ -38,11 +40,18 @@ export default async function signup({ data }: { data: SignupServiceData }) {
     throw error;
   }
 
+  const userRole = await findOneRoleService({ name: "User" });
+
+  if (!userRole) {
+    throw new RoleNotFoundError("Role not found");
+  }
+
   createdUser = await createUserRepository({
     firstName: firstName,
     lastName: lastName,
     email: email,
     password: hashedPassword,
+    roleId: userRole.id,
   });
 
   return createdUser;
