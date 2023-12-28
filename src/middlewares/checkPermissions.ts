@@ -1,8 +1,8 @@
 import { NextFunction, Response } from "express";
-import { AuthenticatedRequest } from "../definitions/AuthenticatedRequest";
+import { IAuthenticatedRequest } from "../definitions/IAuthenticatedRequest";
 
 export default function checkPermissions(requiredPermissions: string[]) {
-  return (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
+  return (req: IAuthenticatedRequest, res: Response, next: NextFunction) => {
     const userPermissions = req.user?.permissions || [];
 
     const hasRequiredPermissions = requiredPermissions.every((permission) =>

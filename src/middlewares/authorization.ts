@@ -1,10 +1,10 @@
 import { Response, NextFunction } from "express";
 import { decodeAccessToken } from "../utils/security/jwt";
-import { AuthenticatedRequest } from "../definitions/AuthenticatedRequest";
+import { IAuthenticatedRequest } from "../definitions/IAuthenticatedRequest";
 import { TDecodedAccessToken } from "../definitions/types";
 
 export default async function authorization(
-  req: AuthenticatedRequest,
+  req: IAuthenticatedRequest,
   res: Response,
   next: NextFunction
 ) {

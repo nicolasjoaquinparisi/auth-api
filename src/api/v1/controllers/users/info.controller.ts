@@ -1,9 +1,9 @@
 import { Response, NextFunction } from "express";
 import infoService from "../../services/users/info.service";
-import { AuthenticatedRequest } from "../../../../definitions/AuthenticatedRequest";
+import { IAuthenticatedRequest } from "../../../../definitions/IAuthenticatedRequest";
 
 export default async function signin(
-  req: AuthenticatedRequest,
+  req: IAuthenticatedRequest,
   res: Response,
   next: NextFunction
 ) {
