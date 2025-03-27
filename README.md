@@ -80,8 +80,8 @@ npm run dev
 
 Once the server is running, you can interact with the API using tools like Postman or cURL. The available endpoints include:
 
-- `POST /signup`: Register a new user
-- `POST /login`: Authenticate a user and retrieve a JWT token
-- `GET /profile`: Retrieve the authenticated user's profile (requires JWT token)
+- `POST /api/auth/signup`: Register a new user
+- `POST /api/auth/signin`: Authenticate a user and retrieve a JWT token
+- `GET /api/users/profile`: Retrieve the authenticated user's profile (requires JWT token)
 
 Refer to the API documentation for detailed information on each endpoint and their required parameters.
