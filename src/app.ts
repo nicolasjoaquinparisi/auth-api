@@ -1,33 +1,50 @@
 import express, { json, urlencoded } from "express";
 import helmet from "helmet";
-import morgan from "morgan";
 import cors from "cors";
+import { env } from "./config/env";
+import { connectToDatabase } from "./database/prisma";
+
+import requestId from "./middlewares/requestId";
 import corsOptions from "./middlewares/cors";
-import { config } from "dotenv";
-import connectToDatabase from "./database/prisma";
-import healthcheck from "./api/healthcheck";
-import authRouter from "./api/v1/routes/auth.router";
-import usersRouter from "./api/v1/routes/users.router";
+import requestLogger from "./middlewares/requestLogger";
 import errorHandler from "./middlewares/errorHandler";
 
-config();
+import authRouter from "./api/auth/authRouter";
+import usersRouter from "./api/users/usersRouter";
 
-const PORT = process.env.PORT;
+const { API_PORT } = env;
+
 const app = express();
-
-connectToDatabase();
 
 app.use(json());
 app.use(urlencoded({ extended: true }));
 app.use(helmet());
 app.use(cors(corsOptions));
-app.use(morgan("dev"));
+app.use(requestId);
+app.use(requestLogger);
 
-app.use("/api", healthcheck);
-app.use("/api/v1/auth", authRouter);
-app.use("/api/v1/users", usersRouter);
+app.use("/api/auth", authRouter);
+app.use("/api/users", usersRouter);
+
 app.use(errorHandler);
 
-app.listen(PORT, () => {
-  console.info(`✨ Auth API running on PORT ${PORT}`);
-});
+export { app };
+
+const startServer = async () => {
+  const server = app.listen(API_PORT, async () => {
+    await connectToDatabase();
+    console.info(
+      `✨ Server running in ${env.NODE_ENV} mode on PORT ${API_PORT}`
+    );
+  });
+  return server;
+};
+
+if (process.env.NODE_ENV !== "test") {
+  startServer();
+}
+
+export { startServer };
+
+const server = app;
+export default server;

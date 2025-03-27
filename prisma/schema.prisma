@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,59 +8,24 @@ datasource db {
 }
 
 model User {
-  id              String               @id @default(uuid())
-  createdAt       DateTime             @default(now())
-  updatedAt       DateTime             @updatedAt
+  id              String    @id @default(uuid())
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
   deletedAt       DateTime?
   firstName       String
   lastName        String
-  email           String               @unique
+  email           String    @unique
   password        String
-  logins          Int                  @default(0)
+  logins          Int       @default(0)
   lastLogin       DateTime?
-  roleId          String
-  role            Role                 @relation(fields: [roleId], references: [id])
-  permissions     PermissionsOnUsers[]
-  isBlocked       Boolean              @default(false)
-  privateMetadata Json?                @default("{}")
-  publicMetadata  Json?                @default("{}")
+  isBlocked       Boolean   @default(false)
+  privateMetadata Json?     @default("{}")
+  publicMetadata  Json?     @default("{}")
+
+  role ERoles @default(USER)
 }
 
-model Role {
-  id          String               @id @default(uuid())
-  createdAt   DateTime             @default(now())
-  updatedAt   DateTime             @updatedAt
-  deletedAt   DateTime?
-  name        String               @unique
-  description String?              @default("")
-  users       User[]
-  permissions PermissionsOnRoles[]
-}
-
-model Permission {
-  id          String               @id @default(uuid())
-  createdAt   DateTime             @default(now())
-  updatedAt   DateTime             @updatedAt
-  name        String               @unique
-  description String?              @default("")
-  roles       PermissionsOnRoles[]
-  users       PermissionsOnUsers[]
-}
-
-model PermissionsOnRoles {
-  role         Role       @relation(fields: [roleId], references: [id])
-  permission   Permission @relation(fields: [permissionId], references: [id])
-  roleId       String
-  permissionId String
-
-  @@id([roleId, permissionId])
-}
-
-model PermissionsOnUsers {
-  user         User       @relation(fields: [userId], references: [id])
-  permission   Permission @relation(fields: [permissionId], references: [id])
-  userId       String
-  permissionId String
-
-  @@id([userId, permissionId])
+enum ERoles {
+  USER
+  ADMIN
 }

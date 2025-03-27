@@ -1,22 +1,23 @@
-import { Request, Response, NextFunction, Errback } from "express";
-import EmailConflictError from "../errors/EmailConflictError";
-import WeakPasswordError from "../errors/WeakPasswordError";
+import { Response, NextFunction } from "express";
+import { IIdentifiedRequest } from "../types/interfaces";
+import logger from "../helpers/logger";
+import HTTPResponseError from "../errors/HTTPResponseError";
 
-export default async function errorHandler(
-  err: Errback,
-  req: Request,
+export default function errorHandler(
+  err: Error,
+  req: IIdentifiedRequest,
   res: Response,
   next: NextFunction
 ) {
-  console.error(err);
-
-  if (err instanceof EmailConflictError) {
-    return res.status(err.status).json({ message: err.message });
+  if (req?.logger) {
+    req?.logger.error(err);
+  } else {
+    logger.error(err);
   }
 
-  if (err instanceof WeakPasswordError) {
-    return res.status(err.status).json({ message: err.message });
+  if (err instanceof HTTPResponseError) {
+    return res.status(err.status).send({ message: err.message });
   }
 
-  res.status(500).send({ message: "internal server error" });
+  res.status(503).send({ message: "Service unavailable" });
 }
