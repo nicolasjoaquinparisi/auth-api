@@ -24,8 +24,8 @@ const swaggerSpec = swaggerJsdoc(swaggerOptions);
 
 app.use(json());
 app.use(urlencoded({ extended: true }));
-// app.use(helmet);
-// app.use(cors(corsOptions));
+app.use(helmet);
+app.use(cors(corsOptions));
 app.use(requestId);
 app.use(requestLogger);
 
