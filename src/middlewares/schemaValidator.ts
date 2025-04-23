@@ -53,7 +53,7 @@ export default function schemaValidator({
           );
         }
 
-        return next(new Error("Unknown error")); // Corregí el typo "Unknow" a "Unknown"
+        return next(new Error("Unknown error"));
       }
     }
 
